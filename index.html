@@ -486,7 +486,10 @@ TERMS.forEach(function(t,i){var b=el('button','term');b.setAttribute('aria-expan
 
 /* 4 PA counting */
 var PA=[['cat',['k','æ','t']],['ship',['ʃ','ɪ','p']],['stop',['s','t','ɑ','p']],['cheese',['tʃ','iː','z']],['box',['b','ɑ','k','s']],['eight',['eɪ','t']]],pi=0,pRight=0;
-function say(w){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.8;speechSynthesis.speak(u)}catch(e){}}
+var VOICE=null;
+function pickVoice(){try{var vs=speechSynthesis.getVoices()||[];VOICE=vs.filter(function(v){return v.name==='Google US English'})[0]||vs.filter(function(v){return /Google/i.test(v.name)&&/^en[-_]US/i.test(v.lang)})[0]||vs.filter(function(v){return /^en[-_]US/i.test(v.lang)})[0]||null}catch(e){}}
+try{if('speechSynthesis' in window){pickVoice();speechSynthesis.addEventListener('voiceschanged',pickVoice)}}catch(e){}
+function say(w){try{if(!('speechSynthesis' in window))return;if(!VOICE)pickVoice();speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(w);if(VOICE)u.voice=VOICE;u.lang='en-US';u.rate=.8;speechSynthesis.speak(u)}catch(e){}}
 function paShow(){var it=PA[pi];$('paWord').textContent=it[0];$('paN').textContent='第 '+(pi+1)+' / '+PA.length+' 題';$('paBlocks').innerHTML='';$('paFb').textContent='';$('paFb').className='fb';$('paNext').hidden=true;
   var box=$('paOpts');box.innerHTML='';[2,3,4,5].forEach(function(n){var b=el('button','opt',n+' 塊');b.addEventListener('click',function(){
     if(box.dataset.lock)return;box.dataset.lock='1';var ok=n===it[1].length;b.classList.add(ok?'right':'wrong');if(ok)pRight++;

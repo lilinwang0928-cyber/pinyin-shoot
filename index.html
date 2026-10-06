@@ -1,6 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>拼音如投籃</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Doto:wght@900&family=Barlow+Condensed:wght@600;800&display=swap">
 <style>
+html,body{margin:0}
+img{max-width:100%}
+
 /* Layout: 單欄球場走道——每一節是一個「節次」，頂部黏著計分板式導覽；視覺取自海報的球衣藍、籃球橘、筆刷黃 */
 :root{
   --bg:#e6f2fb; --surface:#ffffff; --sunk:#f1f6fb; --ink:#14245c; --muted:#4d5b85;
@@ -128,10 +136,21 @@ nav button.cur.done::before{color:#14245c}
 #lb{position:fixed;inset:0;z-index:20;background:rgba(5,8,20,.92);align-items:center;justify-content:center;padding:12px;cursor:zoom-out}
 #lb img{max-width:100%;max-height:100%;border-radius:8px}
 #lb button{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;font:700 1rem var(--body);background:#fff;color:#14245c;border:0;border-radius:999px;padding:6px 14px;cursor:pointer}
+/* touch sizing */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+nav{padding:10px 16px;gap:8px}
+nav button{font-size:1.05rem;padding:9px 16px;min-height:44px}
+.lamps button{font-size:.88rem;min-height:44px}
+.lamps button::before{width:16px;height:16px}
+audio{display:block;width:100%;min-height:54px;flex:none}
+.opt,button.btn,a.btn{min-height:44px}
+.sortitem .opt{padding:8px 12px;font-size:1rem}
 footer{color:var(--muted);font-size:.9rem;border-top:2px solid var(--ink);padding-top:14px}
 @media (max-width:620px){header{grid-template-columns:1fr}.terms{grid-template-columns:1fr}.sortitem{grid-template-columns:1fr}.grid4{grid-template-columns:repeat(2,1fr)}}
 </style>
 
+</head>
+<body>
 <nav aria-label="節次">
   <button data-target="pod">Podcast</button><button data-target="s1">暖身</button><button data-target="s2">投籃模擬</button><button data-target="s3">SoR 名詞</button><button data-target="s4">拆音練習</button><button data-target="cm">插播</button><button data-target="s5">臺美對照</button><button data-target="s6">解方</button><button data-target="s7">測驗</button><button data-target="s8">輸出</button><button data-target="more">延伸閱讀</button><button data-target="echo">蕭博士的回響</button>
 </nav>
@@ -541,3 +560,6 @@ if('IntersectionObserver' in window){var nav=document.querySelector('nav'),io=ne
 paint();
 })();
 </script>
+
+</body>
+</html>
